@@ -2,6 +2,7 @@ package com.derekcusack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,21 +20,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> list(Pageable pageable) {
-		return productRepository.findAll(pageable);
+	public Page<Product> list(Integer page, Integer size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+		return productRepository.findAll(pageRequest);
 	}	
 	
 	@Override
-	public Page<Product> listByPriceRange(Pageable pageable, Integer minprice, Integer maxprice) {
-		return productRepository.findAllByPriceBetween(pageable, minprice, maxprice);
+	public Page<Product> listByPriceRange(Integer  minprice, Integer maxprice, Integer page, Integer size) {
+		PageRequest pageRequest = new PageRequest(page, size);
+		return productRepository.findAllByPriceBetween(minprice, maxprice, pageRequest);
 	}
 
 	@Override
-	public void addNewProduct(String name, Integer price) {
-		Product newProduct = new Product();
-		newProduct.setName(name);
-		newProduct.setPrice(price);
-		productRepository.save(newProduct);
+	public void addNewProduct(Product product) {
+		productRepository.save(product);
 	}
 	
 	

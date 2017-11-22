@@ -6,8 +6,8 @@ import com.derekcusack.model.Product;
 
 public interface ProductService {
 
-	public Page<Product> list(Pageable pageable);
-	public Page<Product> listByPriceRange(Pageable pageable, Integer minprice, Integer maxprice);
-	public void addNewProduct(String name, Integer price);
+	public Page<Product> list(Integer page, Integer size);
+	public Page<Product> listByPriceRange(Integer minprice, Integer maxprice, Integer page, Integer size);
+	public void addNewProduct(Product product);
 
 }
